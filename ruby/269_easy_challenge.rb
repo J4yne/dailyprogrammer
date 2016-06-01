@@ -12,6 +12,7 @@ class SpaceCorpFormat
   end
 
   def get_number_of_lines
+    # not really doing anything with this value, but getting it anyways.
     @number_of_lines = @input_array.slice!(0).to_i
   end
 
@@ -20,20 +21,25 @@ class SpaceCorpFormat
   end
 
   def strip_indentation
-
+    @input_array.each do |line|
+      line.lstrip!
+    end
   end
 
   def indent_input
     indent = 0
     @input_array.each do |line|
-      if line.include?(("IF" || "FOR"))
+      if line.include?("IF") || line.include?("FOR")
         indent += 1
         puts line.prepend((@indent_char * indent))
-      elsif line.include?(("ENDIF" || "NEXT"))
+        puts indent # for debugging
+      elsif line.include?("ENDIF") || line.include?("NEXT")
         indent -= 1
         puts line.prepend((@indent_char * indent))
+        puts indent # for debugging
       else
-        puts line
+        puts line.prepend((@indent_char * indent))
+        puts indent # for debugging
       end
     end
   end
@@ -41,28 +47,31 @@ class SpaceCorpFormat
 end
 
 
-# Create new object
+# Create new object.
+# Note: input uses actual tabs/spaces, not placeholders.
 
-input = %{12
-····
+input = <<EOF
+12
+    
 VAR I
-·FOR I=1 TO 31
-»»»»IF !(I MOD 3) THEN
-··PRINT "FIZZ"
-··»»ENDIF
-»»»»····IF !(I MOD 5) THEN
-»»»»··PRINT "BUZZ"
-··»»»»»»ENDIF
-»»»»IF (I MOD 3) && (I MOD 5) THEN
-······PRINT "FIZZBUZZ"
-··»»ENDIF
-»»»»·NEXT
-}
+ FOR I=1 TO 31
+\t\t\t\tIF !(I MOD 3) THEN
+  PRINT "FIZZ"
+  \t\tENDIF
+\t\t\t\t    IF !(I MOD 5) THEN
+\t\t\t\t  PRINT "BUZZ"
+  \t\t\t\t\t\tENDIF
+\t\t\t\tIF (I MOD 3) && (I MOD 5) THEN
+      PRINT "FIZZBUZZ"
+  \t\tENDIF
+\t\t\t\t NEXT
+EOF
 
 doc = SpaceCorpFormat.new(input)
 doc.get_number_of_lines
 doc.get_indent_char
 
+doc.strip_indentation
 pp doc
 doc.indent_input
 
