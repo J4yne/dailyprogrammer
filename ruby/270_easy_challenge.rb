@@ -30,7 +30,7 @@ class TransposeText
 
   def make_square
     @input_array.each do |row|
-      row << " " until row.length == @max_col
+      row << "\n" until row.length == @max_col
     end
   end
 
