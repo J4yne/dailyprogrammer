@@ -1,17 +1,25 @@
 # [2017-05-01] Challenge #313 [Easy] Subset sum
 # https://redd.it/68oda5
 
-# base challenge
+# base challenge -- with class
 
-input = [0, 1, 2, 3, 4, 5]
+class SubsetSum
 
-# update all elements to absolute
-input.map! {|i| i.abs }
+  attr_accessor :inputset
 
-# compare arrays
-if (input.uniq.length != input.length) || (input.any? {|i| i == 0})
-  puts "true -- is subset, found dups or zero."
-else
-  puts "false -- not subset, found no dups or zero."
+  def initialize (inputset)
+    @inputset = inputset
+  end
+
+  def is_subset?
+    @inputset.map! {|e| e.abs}
+
+    if (@inputset.uniq.length != @inputset.length) || (@inputset.any? {|e| e == 0})
+      true
+    else
+      false
+    end
+  end
+
 end
 
