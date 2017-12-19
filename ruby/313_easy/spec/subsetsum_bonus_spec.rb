@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../313_easy.rb'
+require_relative '../313_easy_bonus.rb'
 
 RSpec.describe 'a working subset method' do
 

@@ -26,27 +26,29 @@ class SpaceCorpFormat
     end
   end
 
-  def print_doc
-    @input_array.each { |line| puts line }
-  end
-
-  # updates array elements in place
+=begin
   def indent_input
     @indent = 0
     @input_array.each do |line|
-        if line.start_with?("NEXT", "ENDIF")
-          @indent -= 1
-          yield
-          next
-        end
-        if line.start_with?("FOR", "IF")
-          @indent =+ 1
-        end
+      case line
+      when line.include?("IF") || line.include?("FOR")
+        puts line.prepend((@indent_char * @indent)); @indent += 1; puts @indent # for debugging
+      when line.include?("ENDIF") || line.include?("NEXT")
+        @indent -= 1; puts line.prepend((@indent_char * @indent)); puts @indent # for debugging
+      else
+        puts line.prepend((@indent_char * @indent)); puts @indent # for debugging
+      end
     end
   end
+=end
 
-  # block for indent_input method
-  indent_input { |line| line.prepend(@indent_char * @indent) }
+  def find_for_blocks
+    @input_array.each do | line |
+      if line.include?("IF")
+        
+    }
+
+
 end
 
 
@@ -73,8 +75,8 @@ EOF
 doc = SpaceCorpFormat.new(input)
 doc.get_number_of_lines
 doc.get_indent_char
-doc.strip_indentation
 
-doc.indent_input
+doc.strip_indentation
 pp doc
+doc.indent_input
 

@@ -5,10 +5,10 @@ require 'pp'
 
 class ScrabbleTiles
 
-  attr_accessor :input, :tiles
+  attr_accessor :input 
 
-  def initialize(input, tiles)
-    @input = input.upcase!
+  def initialize(input)
+    @input = input
 
     # :letter => count, points
     @tiles = {
@@ -57,8 +57,14 @@ class ScrabbleTiles
 
 end
 
-# this is breaking, because no arguments being passed to class.
-output = ScrabbleTiles.new
+# the inputs
+input = "abcdefgh"
+input1 = "PQAREIOURSTHGWIOAE_"
+input2 = "LQTOONOEFFJZT"
+input3 = "AXHDRUIOR_XHJZUQEE"
+
+output = ScrabbleTiles.new(input1)
+pp output
 
 ### MAIN LOOP ### 
 # this is supposed to take input from command line, commenting out for now.

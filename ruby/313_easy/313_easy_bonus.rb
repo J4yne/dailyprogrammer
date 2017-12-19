@@ -11,26 +11,24 @@ class SubsetSum
 
   def initialize (inputset)
     @inputset = inputset
-
-    # created permutation array
     @perm_array = []
   end
 
   def create_perm_array
-    for i in (2..5)
+    for i in (2..@inputset.length)
       x = @inputset.combination(i).to_a
       @perm_array << x
     end
+    @perm_array.flatten!(1)
   end
 
-
-  def is_subset?
-    @inputset.map! {|e| e.abs}
-
-    if (@inputset.uniq.length != @inputset.length) || (@inputset.any? {|e| e == 0})
-      true
-    else
-      false
+  def calculate_sums
+    @perm_array.each do |i|
+      if @perm_array[i].sum == 0
+        puts "true"
+      else
+        puts "false"
+      end
     end
   end
 
@@ -40,4 +38,5 @@ end
 inputset = [1, 2, 3, 4, 5]
 test = SubsetSum.new(inputset)
 test.create_perm_array
-pp test
+test.calculate_sums
+
